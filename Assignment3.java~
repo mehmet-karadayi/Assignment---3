@@ -1,0 +1,60 @@
+/*
+ MEHMET KARADAYI
+ CISC 3130 - TY2
+ ASSIGNMENT 2 - PART 1 
+ 01/03/2019
+ */
+import java.util.*; 
+import java.io.*;
+
+public class Assignment3 {
+  public static void main(String[] args) throws Exception{ 
+    
+    // Initial HashMap is created to be used store words (key) and their frequeny (value)
+    HashMap<String, Integer> map = new HashMap<String, Integer>(); 
+    Scanner in = new Scanner(new File("lyrics.txt"));
+    PrintStream out = new PrintStream (new File("output.txt"));
+    
+    // The first word is retrieved from the file, converted to lowercase, and removed of any punctutation(if there are any)
+    String word = in.next().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+    
+    // The word is placed in the HashMap with the word itself being the key and its apperance (frequency) so far as having the value "1"
+    map.put(word, 1);
+    
+    // Loop parses through the file and retrieves each word seperated by whitescape
+    while (in.hasNext()){
+      word = in.next().toLowerCase().replaceAll("[^a-zA-Z ]", "");
+      
+      // The retrieved word is compared with the previous ones that are already in the map
+      if (map.containsKey(word)){
+        int number = map.get(word)+1; // If the HashMap already contains the word, then the frequency is increased by 1 
+        map.put(word, number); // The new value of the frequency is updated with the corresponding key
+      }
+      
+      else
+        map.put(word, 1); // This is the first occurence of the word, it is added to the map and its value is 1
+    }
+    
+    // A list object is created accepting Entry as its content, the previous hashmap is sent in as an Entry set
+    List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(map.entrySet()); 
+   
+    
+    //Comparator class is implemented through Collections   
+    Comparator <Map.Entry<String, Integer>> comparator = new Comparator <Map.Entry<String, Integer>>(){
+      
+      // Compare function that provides a descending order
+      public int compare(Map.Entry<String, Integer> value1, Map.Entry<String, Integer> value2){
+        return (value2.getValue()).compareTo(value1.getValue());
+      }
+    };
+    
+    //Sorts the list according to the order induced by the comparator above
+    Collections.sort(list, comparator);
+    
+    //For each item in the list, the loop prints out, to a text file, the ordered set of values and their key
+    for (Map.Entry<String, Integer> entry: list){
+      System.out.println(entry.getValue()+": " + entry.getKey());
+    }
+   
+  }
+}
