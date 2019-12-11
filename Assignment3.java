@@ -1,11 +1,12 @@
 /*
  MEHMET KARADAYI
  CISC 3130 - TY2
- ASSIGNMENT 2 - PART 1 
- 01/03/2019
+ ASSIGNMENT 3  
+ 12/11/2019
  */
 import java.util.*; 
 import java.io.*;
+import java.util.List;
 
 public class Assignment3 {
   public static void main(String[] args) throws Exception{ 
